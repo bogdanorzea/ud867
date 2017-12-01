@@ -14,50 +14,63 @@ or, more compactly
 
 task stringsAndTypes {
     doLast {
-        // TODO: Run `$ gradle sAT`
+        // COMPLETED: Run `$ gradle sAT`
         println "Nice work abbreviating the task name"
 
-        // TODO: Create a variable named foo and assign it the value 4.2
+        // COMPLETED: Create a variable named foo and assign it the value 4.2
+        def foo = 4.2
 
-        // TODO: Print the value and class of foo
-
-        // TODO: Use string interpolation to print the square root of 127
+        // COMPLETED: Print the value and class of foo
+        println "foo is of type: ${foo.class} and has value of: ${foo}"
+        // COMPLETED: Use string interpolation to print the square root of 127
         // HINT: http://docs.oracle.com/javase/7/docs/api/java/lang/Math.html
-
-        // TODO: Assign the current date to foo and print it, along with its type
+        println "square root of 127 is ${Math.sqrt(127)}"
+        
+        // COMPLETED: Assign the current date to foo and print it, along with its type
         // HINT:
         // http://docs.oracle.com/javase/7/docs/api/java/util/package-summary.html
+        foo = new Date()
+        println "Date is ${foo} and foo is type: ${foo.class}"
 
-
-        // TODO: Use the `substring` method to extract my name from this string
+        // COMPLETED: Use the `substring` method to extract my name from this string
         def hello = "Hello, Jeremy."
-
-        // TODO: Use `toUpperCase` to capitalize and print my name
-
+        def name = hello.substring(7)
+        // COMPLETED: Use `toUpperCase` to capitalize and print my name
+        println name.toUpperCase()
     }
 }
 
 
 task closures {
     doLast {
-        // TODO: Declare a closure that takes two arguments and adds them together
+        // COMPLETED: Declare a closure that takes two arguments and adds them together
         // HINT: http://www.groovy-lang.org/closures.html
+        def addTogether = { first, second -> first + second }
 
-        // TODO: Call your closure with arguments 17 and 25, and print the result
+        // COMPLETED: Call your closure with arguments 17 and 25, and print the result
         // Beware that something like `println addTwo 17, 25` is ambiguous
-
-    }
+        println addTogether(17,25)
+        }
 }
 
 task lists {
     doLast {
-        // TODO: Declare a list containing 5 of your favorite candies
+        // COMPLETED: Declare a list containing 5 of your favorite candies
         // HINT: Try searching for "groovy list literal"
+        def candies = ["jely beans", "ice cream", "lollipop", "nutella", "praline"]
 
-        // TODO: Create a new list of your candies in all caps
+        // COMPLETED: Create a new list of your candies in all caps
         // HINT: http://mrhaki.blogspot.ca/2010/05/groovy-goodness-use-collect-with.html
+        def new_candy_list = candies.collect { candy -> candy.toUpperCase() }
+        
+        // COMPLETED: Print each capital candy
+        new_candy_list.each {candy -> println candy }
+    }
+}
 
-        // TODO: Print each capital candy
-
+task exercise {
+    doLast {
+        def foo = "bar"
+        println "$foo + foo = ${foo + 'foo'}"
     }
 }
