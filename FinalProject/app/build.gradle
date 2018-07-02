@@ -30,4 +30,5 @@ dependencies {
 
     implementation project(':jokeLibrary')
     implementation project(':jokelibraryactivity')
+    implementation project(path: ':backend',  configuration: 'android-endpoints')
 }
