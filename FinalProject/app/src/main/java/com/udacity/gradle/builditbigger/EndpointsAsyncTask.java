@@ -14,12 +14,12 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 
 import java.io.IOException;
 
-class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
+public class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
     private static final String LOG_TAG = EndpointsAsyncTask.class.getSimpleName();
     private static MyApi myApiService = null;
     private Context context;
 
-    EndpointsAsyncTask(Context context) {
+    public EndpointsAsyncTask(Context context) {
         this.context = context;
     }
 
