@@ -3,8 +3,8 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
-import com.example.jokelibrary.JokeLibrary;
 import com.example.jokelibraryactivity.JokeActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -15,6 +15,7 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 import java.io.IOException;
 
 class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
+    private static final String LOG_TAG = EndpointsAsyncTask.class.getSimpleName();
     private static MyApi myApiService = null;
     private Context context;
 
@@ -45,14 +46,15 @@ class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
         try {
             return myApiService.sayJoke().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            Log.e(LOG_TAG, e.getMessage());
+            return "";
         }
     }
 
     @Override
     protected void onPostExecute(String result) {
         Intent intent = new Intent(context, JokeActivity.class);
-        intent.putExtra("joke", JokeLibrary.getJoke());
+        intent.putExtra("joke", result);
 
         context.startActivity(intent);
     }
