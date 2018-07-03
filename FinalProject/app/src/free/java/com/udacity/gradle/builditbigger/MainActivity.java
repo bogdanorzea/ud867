@@ -1,19 +1,24 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
+import com.example.jokelibraryactivity.JokeActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements EndpointsAsyncTask.EndpointTaskListener {
     private InterstitialAd mInterstitialAd;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +32,15 @@ public class MainActivity extends AppCompatActivity {
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
-                // Code to be executed when when the interstitial ad is closed.
-                new EndpointsAsyncTask(MainActivity.this).execute();
-
                 // Load the next interstitial.
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+                // Code to be executed when when the interstitial ad is closed.
+                new EndpointsAsyncTask(MainActivity.this).execute();
             }
         });
+
+        mProgressBar = findViewById(R.id.progressBar);
     }
 
     @Override
@@ -60,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
         if (mInterstitialAd.isLoaded()) {
+            showProgress();
+
             mInterstitialAd.show();
         } else {
             Log.d("TAG", "The interstitial wasn't loaded yet.");
@@ -67,4 +76,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onCompleteTask(String result) {
+        Intent intent = new Intent(this, JokeActivity.class);
+        intent.putExtra("joke", result);
+
+        startActivity(intent);
+
+        hideProgress();
+    }
+
+    private void showProgress() {
+        // Show the progress bar
+        mProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgress() {
+        // Hide the progress bar
+        mProgressBar.setVisibility(View.GONE);
+    }
 }
